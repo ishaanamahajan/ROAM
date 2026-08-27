@@ -6,6 +6,12 @@ This is a self-contained Project 0 prototype for 24-679, *Designing and Prototyp
 
 ![Roam uses a visual pairwise choice to learn a preference model, which powers individual and group recommendations.](docs/roam-flow.svg)
 
+## Live website
+
+Use the browser-native version at **[ishaanamahajan.github.io/ROAM](https://ishaanamahajan.github.io/ROAM/)**. It runs entirely in the browser through GitHub Pages, stores choices in local browser storage, and requires no Python installation or hosted application server.
+
+The Streamlit version remains the reference Python implementation and local development interface. The static site in `docs/` mirrors its core pairwise learning, recommendation, profile-sharing, and group-ranking behavior in JavaScript so it can run on static hosting.
+
 ## What you can do
 
 - Choose instinctively between pairs of illustrated destinations.
@@ -100,6 +106,9 @@ ROAM/
 ├── scripts/generate_artwork.py   # Deterministic postcard generator
 ├── tests/                        # Model tests plus a full Streamlit journey test
 ├── docs/roam-flow.svg            # System overview used in this README
+├── docs/index.html                # GitHub Pages entry point
+├── docs/styles.css                # Responsive static-site presentation
+├── docs/app.js                    # Browser-side learning and interaction logic
 └── requirements.txt              # Minimal runtime dependencies
 ```
 
