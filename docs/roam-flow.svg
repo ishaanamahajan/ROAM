@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img" aria-labelledby="title desc">
+  <title id="title">Roam system flow</title>
+  <desc id="desc">Pairwise destination choices update a preference model, which produces individual recommendations and can combine with friends' profiles for group recommendations.</desc>
+  <rect width="1200" height="330" rx="28" fill="#f7f4ed"/>
+  <g font-family="Arial, sans-serif" fill="#14221c">
+    <g transform="translate(40 56)">
+      <rect width="260" height="218" rx="24" fill="#fff" stroke="#b9cfc3" stroke-width="2"/>
+      <circle cx="130" cy="64" r="34" fill="#e56b4b" opacity=".9"/>
+      <path d="M112 65l13 13 26-30" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="130" y="127" text-anchor="middle" font-size="25" font-weight="700">Visual choices</text>
+      <text x="130" y="159" text-anchor="middle" font-size="16" fill="#5e6e66">“This place or that one?”</text>
+      <text x="130" y="187" text-anchor="middle" font-size="14" fill="#75827c">3–7 quick comparisons</text>
+    </g>
+    <path d="M320 165h78" stroke="#1f5c45" stroke-width="4"/><path d="M390 154l13 11-13 11" fill="none" stroke="#1f5c45" stroke-width="4"/>
+    <g transform="translate(420 56)">
+      <rect width="360" height="218" rx="24" fill="#173f32"/>
+      <path d="M73 144c42-86 78 52 121-39s65 42 102-40" fill="none" stroke="#9cd3b7" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="73" cy="144" r="10" fill="#f4b942"/><circle cx="194" cy="105" r="10" fill="#f4b942"/><circle cx="296" cy="65" r="10" fill="#f4b942"/>
+      <text x="180" y="177" text-anchor="middle" font-size="25" font-weight="700" fill="#fff">Preference model</text>
+      <text x="180" y="204" text-anchor="middle" font-size="15" fill="#cae1d6">Learn utilities + uncertainty</text>
+    </g>
+    <path d="M800 165h78" stroke="#1f5c45" stroke-width="4"/><path d="M870 154l13 11-13 11" fill="none" stroke="#1f5c45" stroke-width="4"/>
+    <g transform="translate(900 30)">
+      <rect width="260" height="125" rx="24" fill="#dcebe3"/>
+      <text x="130" y="54" text-anchor="middle" font-size="22" font-weight="700">My shortlist</text>
+      <text x="130" y="84" text-anchor="middle" font-size="15" fill="#527060">Unseen places + reasons</text>
+      <rect y="145" width="260" height="125" rx="24" fill="#f3d5cc"/>
+      <text x="130" y="199" text-anchor="middle" font-size="22" font-weight="700">Group trip</text>
+      <text x="130" y="229" text-anchor="middle" font-size="15" fill="#765449">Fairness-aware consensus</text>
+    </g>
+  </g>
+</svg>

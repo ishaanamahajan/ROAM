@@ -1,2 +1,128 @@
-# ROAM
-Project 0 - Special Topics: Designing and Prototyping AI Systems 24679
+# Roam
+
+**Roam learns what kind of trip feels right to you from a small number of visual choices, then recommends unseen destinations. It can also combine several travelers' learned profiles to find a place the whole group can enjoy.**
+
+This is a self-contained Project 0 prototype for 24-679, *Designing and Prototyping AI Systems*. It includes a visual Streamlit interface, a non-trivial pairwise preference model, active question selection, explanations, portable profiles, and fairness-aware group recommendations.
+
+![Roam uses a visual pairwise choice to learn a preference model, which powers individual and group recommendations.](docs/roam-flow.svg)
+
+## What you can do
+
+- Choose instinctively between pairs of illustrated destinations.
+- Get a ranked shortlist of places that have not appeared in your choices.
+- See which travel qualities most influenced the learned profile and each result.
+- Save a profile in the current session or download it as a small JSON file.
+- Upload friends' profile files and combine them in Group Trip mode.
+- Adjust how strongly group ranking protects the least-happy traveler.
+- Try group mode immediately with clearly labeled synthetic example profiles.
+
+No API key, account, database, model download, or internet connection is required after installing the two Python dependencies. The 20 destination postcards are bundled in the repository.
+
+## Quick start
+
+Python 3.10 or newer is recommended.
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate            # Windows: .venv\Scripts\activate
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
+
+Streamlit prints a local URL (normally `http://localhost:8501`). Open it, make at least three choices in **Discover**, then visit **My Taste**. Seven choices produce a stronger first profile.
+
+After installing the requirements, run the automated model and UI tests with:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+To regenerate the local postcard dataset deterministically:
+
+```bash
+python scripts/generate_artwork.py
+```
+
+## How the intelligence works
+
+### 1. Destination representation
+
+Each destination is represented by ten normalized visual-semantic qualities: Beach, Nature, Adventure, Culture, Food, Nightlife, History, Relaxation, Budget-friendly, and Cool climate. Values and descriptions are in [`roam/data.py`](roam/data.py), so the prototype's assumptions can be inspected rather than hidden.
+
+This small classroom prototype uses transparent, hand-curated semantic embeddings instead of downloading a large CLIP model. That keeps setup fast, deterministic, offline-friendly, and easy to explain. A production system would compute CLIP embeddings from a much larger, licensed photo set and separately model practical constraints.
+
+### 2. Pairwise preference learning
+
+For a choice where destination *A* wins over *B*, Roam models:
+
+```text
+P(A > B) = sigmoid(w · (features(A) - features(B)))
+```
+
+The weight vector `w` is fitted with regularized maximum likelihood using Newton updates. L2 regularization acts as a conservative prior, which matters because the user supplies only a few comparisons. The inverse Hessian supplies a local uncertainty estimate. This is a Bradley–Terry-style logistic utility model, implemented from scratch with NumPy in [`roam/model.py`](roam/model.py).
+
+### 3. Active pair selection
+
+Roam does not pick the next pair randomly. It scores candidate pairs using four signals:
+
+- model uncertainty about the difference;
+- how close the current predicted utilities are;
+- semantic diversity between the destinations; and
+- an exposure bonus for less frequently shown places.
+
+That favors choices likely to teach the model something useful while keeping the interaction varied.
+
+### 4. Recommendations and explanations
+
+The learned model scores every destination. Places already shown are excluded so the output is genuinely a discovery list. A match percentage is a calibrated presentation of relative model utility, not an objective probability that a person will enjoy a trip. Explanations expose the strongest positive feature contributions for each recommendation.
+
+### 5. Group mode
+
+Each member's destination utilities are z-normalized before aggregation, preventing a high-magnitude profile from overpowering everyone else. The group score blends:
+
+```text
+group_score = (1 - fairness) × mean_member_score
+              + fairness × least_happy_member_score
+```
+
+This “least misery” component guards against a crowd favorite that one person strongly dislikes. The UI exposes the fairness value and reports disagreement instead of pretending group preference is unanimous.
+
+## Project structure
+
+```text
+ROAM/
+├── app.py                        # Single Streamlit entry point and all four views
+├── roam/
+│   ├── data.py                   # Destination records and semantic embeddings
+│   ├── model.py                  # Learning, active queries, ranking, group aggregation
+│   └── profiles.py               # Safe JSON import/export and demo profiles
+├── assets/destinations/          # 20 bundled offline SVG postcards
+├── scripts/generate_artwork.py   # Deterministic postcard generator
+├── tests/                        # Model tests plus a full Streamlit journey test
+├── docs/roam-flow.svg            # System overview used in this README
+└── requirements.txt              # Minimal runtime dependencies
+```
+
+User choices live only in Streamlit session state and disappear when the session ends. Downloaded profile JSON contains feature weights and a comparison count, not the original choice history.
+
+## Design decisions and limitations
+
+- **Small and legible over broad and opaque.** Twenty destinations make this a compelling demo, not comprehensive travel coverage.
+- **Illustrations over network photos.** The generated postcard images avoid broken links, copyright ambiguity, tracking, and external services. Their alt text identifies each destination.
+- **Taste is not feasibility.** Roam does not account for current cost, visas, disability access, safety, season, carbon impact, or live availability. Those must be checked independently.
+- **Feature ratings are subjective.** They are authored prototype data and can carry cultural bias. Production data should be documented, audited, licensed, and evaluated with diverse travelers.
+- **Match scores are relative.** They should support exploration, not be interpreted as guarantees.
+- **Example people are synthetic.** Maya, Theo, and Sam exist only to demonstrate group mode and are labeled in the interface.
+
+## Reproducibility checklist
+
+- One obvious entry point: `streamlit run app.py`
+- No secrets, undocumented environment variables, remote data, or hidden settings
+- Pinned dependency ranges in `requirements.txt`
+- Deterministic model fitting and artwork generation
+- Tests cover learning direction, cold start, unseen ranking, active pair selection, group fairness, profile round trips, and all four UI views
+- Dataset assumptions, model equation, privacy behavior, and limitations documented here
+
+## AI-use disclosure
+
+OpenAI Codex was used to assist with implementation, interface copy, procedural SVG artwork code, tests, and documentation. The author is responsible for reviewing the work, validating its behavior, and being able to explain the model and design decisions. No generated output is presented as user research or real-world evaluation.
