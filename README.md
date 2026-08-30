@@ -10,6 +10,8 @@ This is a self-contained Project 0 prototype for 24-679, *Designing and Prototyp
 
 Use the browser-native version at **[ishaanmahajan.com/ROAM](https://ishaanmahajan.com/ROAM/#discover)**. It runs entirely in the browser through GitHub Pages, stores choices in local browser storage, and requires no Python installation or hosted application server.
 
+**Website visitors do not install anything:** the public version is plain HTML, CSS, and JavaScript, and its preference model runs locally in any modern browser. Python and the packages in `requirements.txt` are only for developers who want to run the reference Streamlit app, execute the test suite, or regenerate assets.
+
 The Streamlit version remains the reference Python implementation and local development interface. The static site in `docs/` mirrors its core pairwise learning, recommendation, profile-sharing, and group-ranking behavior in JavaScript so it can run on static hosting.
 
 ## What you can do
@@ -22,7 +24,7 @@ The Streamlit version remains the reference Python implementation and local deve
 - Adjust how strongly group ranking protects the least-happy traveler.
 - Try group mode immediately with clearly labeled synthetic example profiles.
 
-No API key, account, database, model download, or internet connection is required after installing the two Python dependencies. The 20 destination postcards are bundled in the repository.
+The public website requires no API key, account, database, model download, Python runtime, or installed package. The 20 destination postcards and all browser code are bundled with the site.
 
 ## Quick start
 
@@ -55,7 +57,9 @@ python scripts/generate_artwork.py
 
 Each destination is represented by ten normalized visual-semantic qualities: Beach, Nature, Adventure, Culture, Food, Nightlife, History, Relaxation, Budget-friendly, and Cool climate. Values and descriptions are in [`roam/data.py`](roam/data.py), so the prototype's assumptions can be inspected rather than hidden.
 
-This small classroom prototype uses transparent, hand-curated semantic embeddings instead of downloading a large CLIP model. That keeps setup fast, deterministic, offline-friendly, and easy to explain. A production system would compute CLIP embeddings from a much larger, licensed photo set and separately model practical constraints.
+This lightweight classroom prototype deliberately uses transparent, hand-curated features rather than running [OpenAI CLIP](https://github.com/openai/CLIP). CLIP is trained on image–text pairs and can encode both images and natural-language descriptions into a shared representation, making it a natural future extension for recognizing visual similarities across a much larger collection of destination photographs without manually rating every place.
+
+A more advanced Roam could precompute CLIP embeddings from licensed destination photos, compare them with prompts such as “a quiet natural retreat” or “a lively historic city,” and feed those compact visual-semantic features into the same pairwise preference model. CLIP is not used in this prototype so the system remains small, deterministic, explainable, zero-install for website visitors, and reproducible without downloading a large model or photo dataset.
 
 ### 2. Pairwise preference learning
 

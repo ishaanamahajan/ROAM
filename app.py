@@ -346,6 +346,9 @@ def about_page() -> None:
 
             **Artwork**  
             Deterministic local SVG postcards; no image API, keys, tracking, or network connection required.
+
+            **Browser version**<br>
+            Zero-install HTML, CSS, and JavaScript; Python dependencies are only for local development.
             """
         )
     st.header("Responsible use & limitations")
@@ -353,9 +356,14 @@ def about_page() -> None:
         """
         This is a discovery aid, not a booking engine. The dataset is small and curated, the feature ratings are
         subjective, and destination fit is not the same as affordability, accessibility, safety, visa eligibility,
-        or current local conditions. A production version should use a broader audited dataset, real CLIP image
-        embeddings, accessible image descriptions, explicit practical constraints, and user research across
-        different travel backgrounds.
+        or current local conditions.
+
+        A natural next step is [OpenAI CLIP](https://github.com/openai/CLIP), which learns a shared representation
+        for images and text. With a larger licensed photo dataset, Roam could use CLIP to recognize visual similarity
+        and relate destination images to prompts such as “a quiet natural retreat” without manually rating every
+        place. CLIP is deliberately not used here so this prototype stays lightweight, deterministic, explainable,
+        and zero-install on the public website. A production version should also add accessible image descriptions,
+        practical travel constraints, and research with travelers from different backgrounds.
 
         **AI-use disclosure:** Generative AI (OpenAI Codex) assisted with implementation, interface copy, tests,
         and documentation.
