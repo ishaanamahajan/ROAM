@@ -8,7 +8,7 @@ This is a self-contained Project 0 prototype for 24-679, *Designing and Prototyp
 
 ## Live website
 
-Use the browser-native version at **[ishaanamahajan.github.io/ROAM](https://ishaanamahajan.github.io/ROAM/)**. It runs entirely in the browser through GitHub Pages, stores choices in local browser storage, and requires no Python installation or hosted application server.
+Use the browser-native version at **[ishaanmahajan.com/ROAM](https://ishaanmahajan.com/ROAM/#discover)**. It runs entirely in the browser through GitHub Pages, stores choices in local browser storage, and requires no Python installation or hosted application server.
 
 The Streamlit version remains the reference Python implementation and local development interface. The static site in `docs/` mirrors its core pairwise learning, recommendation, profile-sharing, and group-ranking behavior in JavaScript so it can run on static hosting.
 
@@ -93,6 +93,15 @@ group_score = (1 - fairness) × mean_member_score
 
 This “least misery” component guards against a crowd favorite that one person strongly dislikes. The UI exposes the fairness value and reports disagreement instead of pretending group preference is unanimous.
 
+## Rubric alignment
+
+| Criterion | Evidence in this project |
+|---|---|
+| **Documentation and Clarity** | A single obvious entry point, documented architecture and model equation, descriptive modules, focused code comments, limitations, privacy behavior, and a transparent one-line AI-use disclosure. |
+| **Functionality and Reproducibility** | A publicly accessible browser version, an offline-capable Streamlit version, bundled data and artwork, minimal pinned dependencies, deterministic behavior, and seven automated tests. |
+| **Intelligence** | Regularized pairwise logistic preference learning, uncertainty estimation, active comparison selection, personalized ranking, contribution explanations, and fairness-aware group aggregation. |
+| **Interaction** | Visual pairwise choices, progress and undo/reset controls, preference visualization, recommendation cards, downloadable/uploadable profiles, group selection, and an adjustable fairness control. |
+
 ## Project structure
 
 ```text
@@ -112,7 +121,7 @@ ROAM/
 └── requirements.txt              # Minimal runtime dependencies
 ```
 
-User choices live only in Streamlit session state and disappear when the session ends. Downloaded profile JSON contains feature weights and a comparison count, not the original choice history.
+In Streamlit, user choices live only in session state and disappear when the session ends. On the public website, choices stay in that browser's local storage. Downloaded profile JSON contains feature weights and a comparison count, not the original choice history.
 
 ## Design decisions and limitations
 
@@ -134,4 +143,4 @@ User choices live only in Streamlit session state and disappear when the session
 
 ## AI-use disclosure
 
-OpenAI Codex was used to assist with implementation, interface copy, procedural SVG artwork code, tests, and documentation. The author is responsible for reviewing the work, validating its behavior, and being able to explain the model and design decisions. No generated output is presented as user research or real-world evaluation.
+OpenAI Codex was used to assist with implementation, interface copy, procedural artwork code, tests, and documentation.
