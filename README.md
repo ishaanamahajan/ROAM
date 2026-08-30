@@ -26,31 +26,6 @@ The Streamlit version remains the reference Python implementation and local deve
 
 The public website requires no API key, account, database, model download, Python runtime, or installed package. The 20 destination postcards and all browser code are bundled with the site.
 
-## Quick start
-
-Python 3.10 or newer is recommended.
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate            # Windows: .venv\Scripts\activate
-python -m pip install -r requirements.txt
-streamlit run app.py
-```
-
-Streamlit prints a local URL (normally `http://localhost:8501`). Open it, make at least three choices in **Discover**, then visit **My Taste**. Seven choices produce a stronger first profile.
-
-After installing the requirements, run the automated model and UI tests with:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-To regenerate the local postcard dataset deterministically:
-
-```bash
-python scripts/generate_artwork.py
-```
-
 ## How the intelligence works
 
 ### 1. Destination representation
@@ -96,6 +71,31 @@ group_score = (1 - fairness) × mean_member_score
 ```
 
 This “least misery” component guards against a crowd favorite that one person strongly dislikes. The UI exposes the fairness value and reports disagreement instead of pretending group preference is unanimous.
+
+## Quick Start to Reproduce ROAM on your local machine
+
+Python 3.10 or newer is recommended.
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate            # Windows: .venv\Scripts\activate
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
+
+Streamlit prints a local URL (normally `http://localhost:8501`). Open it, make at least three choices in **Discover**, then visit **My Taste**. Seven choices produce a stronger first profile.
+
+After installing the requirements, run the automated model and UI tests with:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+To regenerate the local postcard dataset deterministically:
+
+```bash
+python scripts/generate_artwork.py
+```
 
 ## Project structure
 
