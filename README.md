@@ -97,15 +97,6 @@ group_score = (1 - fairness) × mean_member_score
 
 This “least misery” component guards against a crowd favorite that one person strongly dislikes. The UI exposes the fairness value and reports disagreement instead of pretending group preference is unanimous.
 
-## Rubric alignment
-
-| Criterion | Evidence in this project |
-|---|---|
-| **Documentation and Clarity** | A single obvious entry point, documented architecture and model equation, descriptive modules, focused code comments, limitations, privacy behavior, and a transparent one-line AI-use disclosure. |
-| **Functionality and Reproducibility** | A publicly accessible browser version, an offline-capable Streamlit version, bundled data and artwork, minimal pinned dependencies, deterministic behavior, and seven automated tests. |
-| **Intelligence** | Regularized pairwise logistic preference learning, uncertainty estimation, active comparison selection, personalized ranking, contribution explanations, and fairness-aware group aggregation. |
-| **Interaction** | Visual pairwise choices, progress and undo/reset controls, preference visualization, recommendation cards, downloadable/uploadable profiles, group selection, and an adjustable fairness control. |
-
 ## Project structure
 
 ```text
@@ -135,15 +126,6 @@ In Streamlit, user choices live only in session state and disappear when the ses
 - **Feature ratings are subjective.** They are authored prototype data and can carry cultural bias. Production data should be documented, audited, licensed, and evaluated with diverse travelers.
 - **Match scores are relative.** They should support exploration, not be interpreted as guarantees.
 - **Example people are synthetic.** Maya, Theo, and Sam exist only to demonstrate group mode and are labeled in the interface.
-
-## Reproducibility checklist
-
-- One obvious entry point: `streamlit run app.py`
-- No secrets, undocumented environment variables, remote data, or hidden settings
-- Pinned dependency ranges in `requirements.txt`
-- Deterministic model fitting and artwork generation
-- Tests cover learning direction, cold start, unseen ranking, active pair selection, group fairness, profile round trips, and all four UI views
-- Dataset assumptions, model equation, privacy behavior, and limitations documented here
 
 ## AI-use disclosure
 
