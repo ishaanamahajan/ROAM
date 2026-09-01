@@ -277,7 +277,7 @@ def group_page() -> None:
                     st.rerun()
                 except (ValueError, UnicodeDecodeError) as error:
                     st.error(str(error))
-        st.caption("The three named examples are synthetic demo profiles and are clearly separated from your learned profile.")
+        st.caption("The two named examples are synthetic demo profiles and are clearly separated from your learned profile.")
 
     if len(members) < 2:
         st.warning("Choose at least two travelers to make a group recommendation.")

@@ -51,7 +51,6 @@ def profile_from_json(raw: str) -> tuple[str, PreferenceProfile]:
 def demo_profiles() -> dict[str, PreferenceProfile]:
     """Return clearly labeled synthetic profiles for trying group mode."""
     presets = {
-        "Maya · culture + food": {"Culture": 1.8, "Food": 1.7, "History": 1.1, "Nightlife": .3, "Adventure": -.4},
         "Theo · wild outdoors": {"Nature": 1.8, "Adventure": 1.6, "Cool climate": 1.0, "Nightlife": -.8, "History": -.3},
         "Sam · beach + recharge": {"Beach": 1.8, "Relaxation": 1.7, "Food": .6, "Cool climate": -1.1, "Adventure": -.2},
     }

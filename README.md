@@ -123,7 +123,7 @@ In Streamlit, user choices live only in session state and disappear when the ses
 - **Taste is not feasibility.** Roam does not account for current cost, visas, disability access, safety, season, carbon impact, or live availability. Those must be checked independently.
 - **Feature ratings are subjective.** They are authored prototype data and can carry cultural bias. Production data should be documented, audited, licensed, and evaluated with diverse travelers.
 - **Match scores are relative.** They should support exploration, not be interpreted as guarantees.
-- **Example people are synthetic.** Maya, Theo, and Sam exist only to demonstrate group mode and are labeled in the interface.
+- **Example people are synthetic.** Theo and Sam exist only to demonstrate group mode and are labeled in the interface.
 
 ## AI-use disclosure
 
