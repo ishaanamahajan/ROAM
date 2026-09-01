@@ -31,6 +31,10 @@ class AppFlowTests(unittest.TestCase):
         app.radio[0].set_value("Group Trip").run()
         self.assertFalse(app.exception)
         self.assertEqual(app.title[0].value, "Find the group’s happy place.")
+        self.assertTrue(any("at least two" in element.value for element in app.warning))
+
+        app.multiselect[0].set_value(["Maya · culture + food", "Theo · wild outdoors"]).run()
+        self.assertFalse(app.exception)
         group_headings = [element.value for element in app.markdown if element.value.startswith("### ")]
         self.assertEqual(len(group_headings), 6)
 

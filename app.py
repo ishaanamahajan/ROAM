@@ -261,8 +261,7 @@ def group_page() -> None:
 
     setup, import_col = st.columns([.62, .38])
     with setup:
-        defaults = list(library)[:2] if len(library) >= 2 else list(library)
-        members = st.multiselect("Who's traveling?", options=list(library), default=defaults)
+        members = st.multiselect("Who's traveling?", options=list(library), default=[])
         st.caption("Roam gives each traveler equal influence by normalizing their destination scores before averaging them.")
     with import_col:
         st.markdown("**Add a friend's profile**")
