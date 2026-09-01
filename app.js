@@ -36,10 +36,10 @@ let state=loadState();
 let currentView="discover";
 
 function loadState(){
- try{return {...defaultState,...JSON.parse(localStorage.getItem("roam-state-v1")||"{}")};}
+ try{return {...defaultState,...JSON.parse(localStorage.getItem("roam-state-v2")||"{}")};}
  catch{return structuredClone(defaultState);}
 }
-function saveState(){localStorage.setItem("roam-state-v1",JSON.stringify(state));updateStatus();}
+function saveState(){localStorage.setItem("roam-state-v2",JSON.stringify(state));updateStatus();}
 const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
 const sigmoid=x=>1/(1+Math.exp(-Math.max(-30,Math.min(30,x))));
 const esc=value=>String(value).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
