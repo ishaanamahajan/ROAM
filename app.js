@@ -144,7 +144,7 @@ function profileLibrary(){
 }
 function validProfile(p){return p&&p.format==="roam-profile-v1"&&JSON.stringify(p.features)===JSON.stringify(FEATURES)&&Array.isArray(p.weights)&&p.weights.length===FEATURES.length&&p.weights.every(Number.isFinite);}
 function renderGroup(){
- const root=document.querySelector("#group-content"),library=profileLibrary(),names=Object.keys(library),previous=[...document.querySelectorAll(".member-check:checked")].map(x=>x.value),selected=previous.length?previous:names.slice(0,2);
+ const root=document.querySelector("#group-content"),library=profileLibrary(),names=Object.keys(library),selected=[...document.querySelectorAll(".member-check:checked")].map(x=>x.value);
  root.innerHTML=`<div class="group-setup"><div><h3>Who's traveling?</h3><div class="member-list">${names.map(name=>`<label class="member-option"><input class="member-check" type="checkbox" value="${esc(name)}" ${selected.includes(name)?"checked":""}>${esc(name)}</label>`).join("")}</div><p>Roam gives each traveler equal influence by normalizing their destination scores before averaging them.</p></div><div class="upload-box"><h3>Add a friend’s profile</h3><p>Upload the JSON file they downloaded from My Taste. Shared profiles contain model weights, not choice history.</p><button id="upload-button" class="button secondary">Choose profile file</button><p>The three named examples are synthetic demo profiles.</p></div></div><div id="group-results"></div>`;
  document.querySelectorAll(".member-check").forEach(x=>x.addEventListener("change",renderGroupResults));
  document.querySelector("#upload-button").addEventListener("click",()=>document.querySelector("#profile-upload").click());renderGroupResults();
