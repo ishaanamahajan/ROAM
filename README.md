@@ -2,7 +2,7 @@
 
 **Roam learns what kind of trip feels right to you from a small number of visual choices, then recommends unseen destinations. It can also combine several travelers' learned profiles to find a place the whole group can enjoy.**
 
-This is a self-contained Project 0 prototype for 24-679, *Designing and Prototyping AI Systems*. It includes a visual Streamlit interface, a non-trivial pairwise preference model, active question selection, explanations, portable profiles, and fairness-aware group recommendations.
+This is a self-contained Project 0 prototype for 24-679, *Designing and Prototyping AI Systems*. It includes a visual Streamlit interface, a non-trivial pairwise preference model, active question selection, explanations, portable profiles, and group recommendations.
 
 ![Roam uses a visual pairwise choice to learn a preference model, which powers individual and group recommendations.](docs/roam-flow.svg)
 
@@ -21,7 +21,6 @@ The Streamlit version remains the reference Python implementation and local deve
 - See which travel qualities most influenced the learned profile and each result.
 - Save a profile in the current session or download it as a small JSON file.
 - Upload friends' profile files and combine them in Group Trip mode.
-- Adjust how strongly group ranking protects the least-happy traveler.
 - Try group mode immediately with clearly labeled synthetic example profiles.
 
 The public website requires no API key, account, database, model download, Python runtime, or installed package. The 20 destination postcards and all browser code are bundled with the site.
@@ -63,14 +62,13 @@ The learned model scores every destination. Places already shown are excluded so
 
 ### 5. Group mode
 
-Each member's destination utilities are z-normalized before aggregation, preventing a high-magnitude profile from overpowering everyone else. The group score blends:
+Each member's destination utilities are z-normalized before aggregation, preventing a high-magnitude profile from overpowering everyone else. Roam then gives every traveler equal influence:
 
 ```text
-group_score = (1 - fairness) × mean_member_score
-              + fairness × least_happy_member_score
+group_score = mean(normalized_member_scores)
 ```
 
-This “least misery” component guards against a crowd favorite that one person strongly dislikes. The UI exposes the fairness value and reports disagreement instead of pretending group preference is unanimous.
+The UI also reports the standard deviation between member scores as disagreement, rather than pretending a group recommendation is unanimous.
 
 ## Quick Start to Reproduce ROAM on your local machine
 

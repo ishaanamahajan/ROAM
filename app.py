@@ -263,13 +263,7 @@ def group_page() -> None:
     with setup:
         defaults = list(library)[:2] if len(library) >= 2 else list(library)
         members = st.multiselect("Who's traveling?", options=list(library), default=defaults)
-        fairness = st.slider(
-            "How much should Roam protect the least-happy traveler?",
-            min_value=0,
-            max_value=70,
-            value=35,
-            help="0 favors the average. Higher values penalize a destination if even one member is a poor match.",
-        ) / 100
+        st.caption("Roam gives each traveler equal influence by normalizing their destination scores before averaging them.")
     with import_col:
         st.markdown("**Add a friend's profile**")
         uploaded = st.file_uploader("Upload their Roam JSON", type=["json"], label_visibility="collapsed")
@@ -291,13 +285,13 @@ def group_page() -> None:
         return
 
     profiles = [library[name] for name in members]
-    group_scores, disagreement = aggregate_group_scores(profiles, MATRIX, fairness)
+    group_scores, disagreement = aggregate_group_scores(profiles, MATRIX)
     scale = max(float(group_scores.std()), .35)
     matches = 100 / (1 + np.exp(-group_scores / scale))
     ranked = sorted(range(len(DESTINATIONS)), key=lambda index: (-group_scores[index], index))[:6]
 
     st.header("The shortlist")
-    st.caption(f"Balanced for {len(members)} travelers · fairness setting {fairness:.0%}")
+    st.caption(f"Average preference across {len(members)} equally weighted travelers")
     for rank, index in enumerate(ranked, start=1):
         destination = DESTINATIONS[index]
         with st.container(border=True):
@@ -330,9 +324,9 @@ def about_page() -> None:
             different, and not overexposed. This lets a useful preference profile emerge from only a
             handful of answers.
 
-            Group mode first normalizes each person's utilities, then blends average enthusiasm with the
-            score of the least-happy member. The fairness control makes that tradeoff visible instead of
-            hiding it in a black box.
+            Group mode first normalizes each person's utilities so every traveler has equal influence, then
+            averages those normalized scores. The interface also reports disagreement instead of pretending
+            that a group recommendation is unanimous.
             """
         )
     with facts:

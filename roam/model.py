@@ -132,13 +132,11 @@ def contribution_explanation(
 def aggregate_group_scores(
     profiles: Sequence[PreferenceProfile],
     features: np.ndarray,
-    fairness: float = 0.35,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Blend group average with the least-happy member's score.
+    """Average normalized member utilities and report disagreement.
 
     Per-person z-scoring prevents a confident profile from dominating merely
-    because its weight magnitudes are larger. ``fairness=0`` is pure consensus;
-    higher values increasingly protect the least-satisfied traveler.
+    because its weight magnitudes are larger.
     """
     if not profiles:
         raise ValueError("At least one profile is required")
@@ -146,7 +144,6 @@ def aggregate_group_scores(
     means = member_scores.mean(axis=1, keepdims=True)
     standard_deviations = member_scores.std(axis=1, keepdims=True)
     normalized = (member_scores - means) / np.maximum(standard_deviations, 1e-6)
-    group_scores = (1.0 - fairness) * normalized.mean(axis=0) + fairness * normalized.min(axis=0)
+    group_scores = normalized.mean(axis=0)
     disagreement = normalized.std(axis=0)
     return group_scores, disagreement
-

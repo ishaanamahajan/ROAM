@@ -73,7 +73,7 @@
           <div class="prose">
             <p>Roam is a transparent prototype of preference learning. Each destination has a compact visual-semantic embedding across ten travel qualities. When you choose A over B, the model learns which differences best explain that decision.</p>
             <p>Under the hood, Roam fits a regularized <strong>Bradley–Terry logistic utility model</strong>. The next question is selected actively: it favors comparisons that are uncertain, close, visually different, and not overexposed.</p>
-            <p>Group mode first normalizes each person’s utilities, then blends average enthusiasm with the score of the least-happy member. The fairness control makes that tradeoff visible instead of hiding it in a black box.</p>
+            <p>Group mode normalizes each person’s utilities so every traveler has equal influence, then averages those scores. It also reports disagreement rather than pretending the recommendation is unanimous.</p>
           </div>
           <aside class="fact-card">
             <div><strong>Prototype dataset</strong><span>20 destinations · 10 interpretable dimensions</span></div>

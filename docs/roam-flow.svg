@@ -26,7 +26,7 @@
       <text x="130" y="84" text-anchor="middle" font-size="15" fill="#527060">Unseen places + reasons</text>
       <rect y="145" width="260" height="125" rx="24" fill="#f3d5cc"/>
       <text x="130" y="199" text-anchor="middle" font-size="22" font-weight="700">Group trip</text>
-      <text x="130" y="229" text-anchor="middle" font-size="15" fill="#765449">Fairness-aware consensus</text>
+      <text x="130" y="229" text-anchor="middle" font-size="15" fill="#765449">Equal-weight consensus</text>
     </g>
   </g>
 </svg>

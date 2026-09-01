@@ -1,4 +1,4 @@
-"""Unit tests for Roam's model, rankings, group fairness, and profiles."""
+"""Unit tests for Roam's model, rankings, group consensus, and profiles."""
 
 import unittest
 
@@ -45,13 +45,16 @@ class PreferenceModelTests(unittest.TestCase):
         self.assertNotEqual(pair[0], pair[1])
         self.assertTrue(all(0 <= index < len(DESTINATIONS) for index in pair))
 
-    def test_group_fairness_penalizes_a_member_veto(self):
-        features = np.array([[1.0, 0.0], [0.5, 0.5], [0.0, 1.0]])
-        explorer = PreferenceProfile(np.array([2.0, -1.0]), np.eye(2), 10)
-        relaxer = PreferenceProfile(np.array([-2.0, 1.0]), np.eye(2), 10)
-        consensus, _ = aggregate_group_scores([explorer, relaxer], features, fairness=0.7)
-        self.assertGreater(consensus[1], consensus[0])
-        self.assertGreater(consensus[1], consensus[2])
+    def test_group_consensus_averages_normalized_member_scores(self):
+        features = np.array([[1.0, 0.0], [0.4, 0.8], [0.0, 1.0]])
+        explorer = PreferenceProfile(np.array([2.0, -0.5]), np.eye(2), 10)
+        relaxer = PreferenceProfile(np.array([-0.4, 1.0]), np.eye(2), 10)
+        consensus, disagreement = aggregate_group_scores([explorer, relaxer], features)
+
+        member_scores = np.vstack([explorer.scores(features), relaxer.scores(features)])
+        normalized = (member_scores - member_scores.mean(axis=1, keepdims=True)) / member_scores.std(axis=1, keepdims=True)
+        np.testing.assert_allclose(consensus, normalized.mean(axis=0))
+        np.testing.assert_allclose(disagreement, normalized.std(axis=0))
 
     def test_profile_json_round_trip(self):
         profile = fit_preference_model([(0, 1), (2, 3)], self.features)
@@ -64,4 +67,3 @@ class PreferenceModelTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
